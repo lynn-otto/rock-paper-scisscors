@@ -3,6 +3,16 @@ The array below let's us convert between those two */
 
 const arrayRockPaperScissors = ["Rock", "Paper", "Scissors"];
 
+function askForNumber(messageToPlayer) {
+    playerInput = Number(prompt(messageToPlayer));
+
+    while (playerInput*0 !== 0) {
+        console.log("Please enter a number!");
+        playerInput = Number(prompt(messageToPlayer));
+    }
+    return playerInput;
+}
+
 function generateRandomIntegerInbetweenInclusive(lowerBound, upperBound) {
     return Math.floor(Math.random()* (upperBound - lowerBound + 1)) + lowerBound;
 }
@@ -87,6 +97,7 @@ function playGameAgainstComputer(numberOfVictories, playerName) {
             gameRunning = false;
         }
 
+
         if (computerScore === numberOfVictories) {
             console.log(`The winner is the computer!`)
             gameRunning = false;
@@ -96,5 +107,7 @@ function playGameAgainstComputer(numberOfVictories, playerName) {
 }
 
 let playerName = prompt("What is your name?");
-let numberOfVictories = Number(prompt("How many victory rounds to win?"));
+let numberOfVictories = askForNumber("How many victory rounds to win?");
+console.log(numberOfVictories);
+console.log(typeof(numberOfVictories));
 playGameAgainstComputer(numberOfVictories,playerName);
