@@ -6,9 +6,13 @@ const arrayRockPaperScissors = ["Rock", "Paper", "Scissors"];
 function askForNumber(messageToPlayer) {
     playerInput = Number(prompt(messageToPlayer));
 
-    while (playerInput*0 !== 0) {
-        console.log("Please enter a number!");
+    /*Every number * 0 is 0 except for infinity and NaN. We therefore prohibit these cases 
+    We also don't want that 0 or less victories are required*/
+    let incorrectNumber = (playerInput*0 !== 0 || playerInput <= 0);
+    while (incorrectNumber) {
+        console.log("Please enter a positive number!");
         playerInput = Number(prompt(messageToPlayer));
+        incorrectNumber = (playerInput*0 !== 0 || playerInput <= 0);
     }
     return playerInput;
 }
@@ -106,8 +110,7 @@ function playGameAgainstComputer(numberOfVictories, playerName) {
     console.log("The game ends now.")
 }
 
+/*Main*/
 let playerName = prompt("What is your name?");
 let numberOfVictories = askForNumber("How many victory rounds to win?");
-console.log(numberOfVictories);
-console.log(typeof(numberOfVictories));
 playGameAgainstComputer(numberOfVictories,playerName);
