@@ -51,14 +51,50 @@ function checkForWinner(playerSelection, computerSelection, playerName) {
         winner = 2;
         console.log(`${playerName} wins! ${arrayRockPaperScissors[playerSelection]} beats ${arrayRockPaperScissors[computerSelection]}`);
     }
-
+    return winner;
 }
 
+function playGameAgainstComputer(numberOfVictories, playerName) {
+    gameRunning = true;
+    let playerScore = 0;
+    let computerScore = 0;
+    let roundNumber = 1;
+    while (gameRunning) {
+        console.log(`This is round ${roundNumber}.`)
+        
+        let playerSelection = -1;
+        while(playerSelection < 0) {
+            playerInput = prompt("Choose either \"Rock\", \"Paper\" or \"Scissors\".");
+            playerSelection = playerSelects(playerInput);
+        }
 
-let playerChoice = "Scissors";
-playerChoice = playerSelects(playerChoice);
-console.log(`Player chose ${playerChoice}, i.e. ${arrayRockPaperScissors[playerChoice]}.` );
-let computerChoice = computerSelects();
-console.log(`Computer chose ${computerChoice}, i.e. ${arrayRockPaperScissors[computerChoice]}.`)
-let playerName = "Lynn";
-checkForWinner(playerChoice, computerChoice, playerName);
+        let computerSelection = computerSelects();
+
+        let result = checkForWinner(playerSelection, computerSelection, playerName);
+
+        if (result === 1) {
+            computerScore++;
+        }
+        if (result === 2) {
+            playerScore++;
+        }
+        console.log(`${playerName} Score: ${playerScore}\; Computer Score: ${computerScore}`)
+        roundNumber++;
+
+
+        if(playerScore === numberOfVictories) {
+            console.log(`The winner is ${playerName}!`)
+            gameRunning = false;
+        }
+
+        if (computerScore === numberOfVictories) {
+            console.log(`The winner is the computer!`)
+            gameRunning = false;
+        }
+    }
+    console.log("The game ends now.")
+}
+
+let playerName = prompt("What is your name?");
+let numberOfVictories = Number(prompt("How many victory rounds to win?"));
+playGameAgainstComputer(numberOfVictories,playerName);
