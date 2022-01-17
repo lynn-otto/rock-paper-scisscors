@@ -12,6 +12,27 @@ function computerSelects() {
     return computerSelection;
 }
 
+function caseInsensitiveStringComparison (string1, string2) {
+    string1UpperCase = string1.toUpperCase();
+    string2UpperCase = string2.toUpperCase();
+    if (string1UpperCase == string2UpperCase) {
+        return true;
+    }
+    return false;
+}
+
+/*This returns -1 if neither of "Rock", "Paper" and "Scissors" was given as input.
+Otherwise it returns the integer corresponding to the element in the array at the top. */
+function playerSelects(playerInput) {
+    let choice = -1;
+    for (let i = 0; i < arrayRockPaperScissors.length; i++) {
+        if (caseInsensitiveStringComparison(playerInput, arrayRockPaperScissors[i])) {
+            let choice = i;
+        }
+    }
+    return choice;
+}
 
 
-console.log(generateRandomIntegerInbetweenInclusive(0,2));
+
+console.log(playerSelects("hi"));
