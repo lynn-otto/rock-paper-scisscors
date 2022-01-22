@@ -46,3 +46,15 @@ li {
 .output {
     font-size: 20px;
 }
+
+.message{
+    width: 400px;
+    color:rgb(223, 15, 15);
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.reset {
+    background-color: rgb(15, 29, 223);
+    border:2px solid rgb(248, 112, 0)
+}

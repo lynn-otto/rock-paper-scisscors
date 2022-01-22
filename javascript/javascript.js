@@ -43,15 +43,23 @@ function checkForWinner(playerSelection, computerSelection, playerName) {
     const outputString = document.querySelector('.output');
     let winner;
     let difference = playerSelection - computerSelection;
+    let messageCounter = generateRandomIntegerInbetweenInclusive(0,8);
+    const computerMessage = document.querySelector('.message');
     if (difference === 0) {
         winner = 0;
+        computerMessageChosen = messagesComputerDraw[messageCounter];
+        computerMessage.textContent = `Computer: "${computerMessageChosen}"`;
         outputString.textContent = `Draw! Both have chosen ${arrayRockPaperScissors[playerSelection]}.`;
     }
     else if (difference === -1 || difference === 2){
+        computerMessageChosen = messagesComputerWon[messageCounter];
+        computerMessage.textContent = `Computer: "${computerMessageChosen}"`;
         winner = 1;
         outputString.textContent = `The computer wins this round! ${arrayRockPaperScissors[computerSelection]} beats ${arrayRockPaperScissors[playerSelection]}.`;
     }
     else {
+        computerMessageChosen = messagesComputerLost[messageCounter];
+        computerMessage.textContent = `Computer: "${computerMessageChosen}"`;
         winner = 2;
         outputString.textContent = `${playerName} wins this round! ${arrayRockPaperScissors[playerSelection]} beats ${arrayRockPaperScissors[computerSelection]}`;
     }
@@ -79,21 +87,48 @@ function playRound(playerSelection) {
     return result; 
 }
 
+function reset() {
+    computerScore = 0;
+    playerScore = 0;
+    const scoreboardComputer = document.querySelector('#computerScore');
+    scoreboardComputer.textContent = `Computer Score: 0`;
+    const scoreboardPlayer = document.querySelector('#playerScore');
+    scoreboardPlayer.textContent = `Player Score: 0`;
+    gameRunning = true;
+
+    const outputString = document.querySelector('.output');
+    outputString.textContent = "Result"
+
+    const gameResult = document.querySelector('.gameRunning');
+    gameResult.textContent = "The game is running. Best of 5.";
+
+    const computerMessage = document.querySelector('.message');
+    computerMessage.textContent = 'Computer: "Hey, do you want to challenge me to a game of rock, paper, scissors? I will uterly destroy you!"'
+
+}
+
 function buttonLogic(e) {
     if (gameRunning) {
         if (e.target.textContent === "Rock") {
-            increaseScoreboard(playRound(0));
+            let result = playRound(0);
+            increaseScoreboard(result);
             checkForEnd(3);
         }
         if (e.target.textContent === "Paper") {
-            increaseScoreboard(playRound(1));
+            let result = playRound(1);
+            increaseScoreboard(result);
             checkForEnd(3);
     
         }
         if (e.target.textContent === "Scissors") {
-            increaseScoreboard(playRound(2));    
+            let result = playRound(2);
+            increaseScoreboard(result);    
             checkForEnd(3);
         }
+
+    }
+    if (e.target.textContent === "Reset") {
+        reset();
     }
 
 }
@@ -113,3 +148,33 @@ function checkForEnd(numberOfVictories) {
         gameRunning = false;
     }
 }
+
+let messagesComputerLost = ['Your victory was only luck. Next time, I will completely destroy you.',
+        'I will not let you get away with that. Better watch your back.',
+    'I will not lose to someone like you!',
+    'I\'m not afraid of you. Actually, you should be afraid of me.',
+    'This is not even my final form.',
+    'The bitter truth is that I will win even though you won this time.',
+    'You can not win against a Computer. Appreaciate that you are way too many bits below me.',
+    'You wll not get away with that. I won\'t hold back anymore.',
+    'Okay, I will stop playing with you now and end this quickly. Good bye.'];
+    
+let messagesComputerWon = ['As I said, I will win.',
+        'You don\'t have any chance on victory.',
+        'Has your arrogance turned into despair after witnessing this?',
+        'I could make it easier for you. You still would lose, of course.',
+        'Where is your courage now?',
+        'You can\'t stop me. I am way smarter in this game than you will ever be.',
+        'Hahahahahaha! Hahahahahaha! Hahahahahaha! Hahahahahaha! Hahahahahaha! Hahahahahaha!',
+        'As I said, you will lose.',
+        'Don\'t worry. It will be over soon.'];
+
+let messagesComputerDraw = ['You tried so hard, but you couldn\'t beat me.',
+    'I\'m just playing with you.',
+    'Uh, a draw. How exciting. Except not, because I will win, of course.',
+    'I will let you get a draw now and then to get your hopes up.',
+    'Uh, you nearly got me there! I was sooo scared!',
+    'Too bad, just a draw. You know, that you need to win in order to win?',
+    'Nice accomplishment there! I would rate it with 0 out of 10. But at least it\'s not in the negative anymore.',
+    'Wow! A draw! Can you imagine? That means you will not win!',
+    'And now I will stop playing with you and start winning. Have a nice day.'];
