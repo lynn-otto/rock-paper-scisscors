@@ -113,9 +113,3 @@ function checkForEnd(numberOfVictories) {
         gameRunning = false;
     }
 }
-
-
-/*Main
-let playerName = prompt("What is your name?");
-let numberOfVictories = askForNumber("How many victory rounds to win?");
-playGameAgainstComputer(numberOfVictories,playerName);*/
