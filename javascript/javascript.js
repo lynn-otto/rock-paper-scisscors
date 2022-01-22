@@ -26,17 +26,6 @@ function computerSelects() {
     return computerSelection;
 }
 
-
-
-function caseInsensitiveStringComparison (string1, string2) {
-    string1UpperCase = string1.toUpperCase();
-    string2UpperCase = string2.toUpperCase();
-    if (string1UpperCase == string2UpperCase) {
-        return true;
-    }
-    return false;
-}
-
 /*This returns -1 if neither of "Rock", "Paper" and "Scissors" was given as input.
 Otherwise it returns the integer corresponding to the element in the array at the top. */
 function playerSelects(playerInput) {
@@ -51,66 +40,82 @@ function playerSelects(playerInput) {
 
 /* Return 0: Draw; Return 1: Computer wins!; Return 2: Player wins */
 function checkForWinner(playerSelection, computerSelection, playerName) {
+    const outputString = document.querySelector('.output');
     let winner;
     let difference = playerSelection - computerSelection;
     if (difference === 0) {
         winner = 0;
-        console.log(`Draw! Both have chosen ${arrayRockPaperScissors[playerSelection]}.`);
+        outputString.textContent = `Draw! Both have chosen ${arrayRockPaperScissors[playerSelection]}.`;
     }
     else if (difference === -1 || difference === 2){
         winner = 1;
-        console.log(`The computer wins! ${arrayRockPaperScissors[computerSelection]} beats ${arrayRockPaperScissors[playerSelection]}.`);
+        outputString.textContent = `The computer wins this round! ${arrayRockPaperScissors[computerSelection]} beats ${arrayRockPaperScissors[playerSelection]}.`;
     }
     else {
         winner = 2;
-        console.log(`${playerName} wins! ${arrayRockPaperScissors[playerSelection]} beats ${arrayRockPaperScissors[computerSelection]}`);
+        outputString.textContent = `${playerName} wins this round! ${arrayRockPaperScissors[playerSelection]} beats ${arrayRockPaperScissors[computerSelection]}`;
     }
     return winner;
 }
-
-function playGameAgainstComputer(numberOfVictories, playerName) {
-    gameRunning = true;
-    let playerScore = 0;
-    let computerScore = 0;
-    let roundNumber = 1;
-    while (gameRunning) {
-        console.log(`This is round ${roundNumber}.`)
-        
-        let playerSelection = -1;
-        while(playerSelection < 0) {
-            playerInput = prompt("Choose either \"Rock\", \"Paper\" or \"Scissors\".");
-            playerSelection = playerSelects(playerInput);
-        }
-
-        let computerSelection = computerSelects();
-
-        let result = checkForWinner(playerSelection, computerSelection, playerName);
-
-        if (result === 1) {
-            computerScore++;
-        }
-        if (result === 2) {
-            playerScore++;
-        }
-        console.log(`${playerName} Score: ${playerScore}\; Computer Score: ${computerScore}`)
-        roundNumber++;
-
-
-        if(playerScore === numberOfVictories) {
-            console.log(`The winner is ${playerName}!`)
-            gameRunning = false;
-        }
-
-
-        if (computerScore === numberOfVictories) {
-            console.log(`The winner is the computer!`)
-            gameRunning = false;
-        }
+let playerScore = 0;
+let computerScore = 0;
+let gameRunning = true;
+function increaseScoreboard(result) {
+    if (result ==1) {
+        computerScore = computerScore + 1;
+        const scoreboard = document.querySelector('#computerScore');
+        scoreboard.textContent = `Computer Score: ${computerScore}`;
     }
-    console.log("The game ends now.")
+    if (result ==2) {
+        playerScore = playerScore + 1;
+        const scoreboard = document.querySelector('#playerScore');
+        scoreboard.textContent = `Player Score: ${playerScore}`;
+    }
 }
 
-/*Main*/
+function playRound(playerSelection) {
+    let computerSelection = computerSelects();
+    let result = checkForWinner(playerSelection, computerSelection, "Player");
+    return result; 
+}
+
+function buttonLogic(e) {
+    if (gameRunning) {
+        if (e.target.textContent === "Rock") {
+            increaseScoreboard(playRound(0));
+            checkForEnd(3);
+        }
+        if (e.target.textContent === "Paper") {
+            increaseScoreboard(playRound(1));
+            checkForEnd(3);
+    
+        }
+        if (e.target.textContent === "Scissors") {
+            increaseScoreboard(playRound(2));    
+            checkForEnd(3);
+        }
+    }
+
+}
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', buttonLogic));
+
+function checkForEnd(numberOfVictories) {
+    if (playerScore ==numberOfVictories) {
+        const gameResult = document.querySelector('.gameRunning');
+        gameResult.textContent = "The game has ended. The winner is Player."
+        gameRunning = false;
+    }
+    if (computerScore ==numberOfVictories) {
+        const gameResult = document.querySelector('.gameRunning');
+        gameResult.textContent = "The game has ended. The winner is Computer."
+        gameRunning = false;
+    }
+}
+
+
+/*Main
 let playerName = prompt("What is your name?");
 let numberOfVictories = askForNumber("How many victory rounds to win?");
-playGameAgainstComputer(numberOfVictories,playerName);
+playGameAgainstComputer(numberOfVictories,playerName);*/
