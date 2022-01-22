@@ -103,7 +103,7 @@ function reset() {
     gameResult.textContent = "The game is running. Best of 5.";
 
     const computerMessage = document.querySelector('.message');
-    computerMessage.textContent = 'Computer: "Hey, do you want to challenge me to a game of rock, paper, scissors? I will uterly destroy you!"'
+    computerMessage.textContent = 'Computer: "Hey, do you want to challenge me to a game of rock, paper, scissors? I will utterly destroy you!"'
 
 }
 
