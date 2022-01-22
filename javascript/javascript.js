@@ -138,11 +138,15 @@ buttons.forEach(button => button.addEventListener('click', buttonLogic));
 
 function checkForEnd(numberOfVictories) {
     if (playerScore ==numberOfVictories) {
+        const computerMessage = document.querySelector('.message');
+        computerMessage.textContent = `Computer: "There is no way that a mere mortal would defeat me!"`;
         const gameResult = document.querySelector('.gameRunning');
         gameResult.textContent = "The game has ended. The winner is Player."
         gameRunning = false;
     }
     if (computerScore ==numberOfVictories) {
+        const computerMessage = document.querySelector('.message');
+        computerMessage.textContent = `Computer: "And so you were utterly destroyed. We can do this anytime again."`;
         const gameResult = document.querySelector('.gameRunning');
         gameResult.textContent = "The game has ended. The winner is Computer."
         gameRunning = false;
